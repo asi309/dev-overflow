@@ -16,13 +16,19 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     handleThemeChange();
   }, [mode]);
 
+  console.log('MODE', mode);
+
   const handleThemeChange = () => {
-    if (mode === 'dark') {
-      // setMode('light');
-      document.documentElement.classList.add('light');
-    } else {
-      // setMode('dark');
+    if (
+      localStorage.getItem('theme') === 'dark' ||
+      (!('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      setMode('dark');
       document.documentElement.classList.add('dark');
+    } else {
+      setMode('light');
+      document.documentElement.classList.remove('dark');
     }
   };
 
